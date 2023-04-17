@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.183.0/http/server.ts";
 
-import { Rewriter } from "./rewriter.ts"
+import { Rewriter, setUrlToProxy } from "./rewriter.ts"
 
 serve(async (req: Request) => {
 
@@ -11,6 +11,7 @@ serve(async (req: Request) => {
     const contentType = await response.headers.get("content-type");
 
     if (contentType?.startsWith("text/html")) {
+        setUrlToProxy(urlToProxy);
         return new Response(await Rewriter.transform(response).text(), {
             headers: {
                 "content-type": "text/html; charset=utf-8",

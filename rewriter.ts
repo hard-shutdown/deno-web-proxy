@@ -2,6 +2,10 @@ import {
     HTMLRewriter 
 } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
 
+var urlToProxy = '';
+
+export const setUrlToProxy = (url: string) => { urlToProxy = url }
+
 export const encodeProperPath = (path: string, baseUrl: string) => {
     const url = new URL(path, baseUrl);
     return encodeURIComponent(url.href);
@@ -10,7 +14,6 @@ export const encodeProperPath = (path: string, baseUrl: string) => {
 export const Rewriter = new HTMLRewriter()
         .on("*[href]", {
             element(element) {
-                console.log(typeof this);
                 const href = element.getAttribute("href");
                 if (href) {
                     element.setAttribute("href", `/?url=${encodeProperPath(href, urlToProxy)}`);
