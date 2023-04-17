@@ -10,6 +10,7 @@ export const encodeProperPath = (path: string, baseUrl: string) => {
 export const Rewriter = new HTMLRewriter()
         .on("*[href]", {
             element(element) {
+                console.log(typeof this);
                 const href = element.getAttribute("href");
                 if (href) {
                     element.setAttribute("href", `/?url=${encodeProperPath(href, urlToProxy)}`);
