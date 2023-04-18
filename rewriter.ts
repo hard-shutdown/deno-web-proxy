@@ -12,6 +12,11 @@ export const encodeProperPath = (path: string, baseUrl: string) => {
 }
 
 export const Rewriter = new HTMLRewriter()
+        .on("head", {
+            element(element) {
+                element.prepend(`<script src="/__inject.js"></script>`, { html: true });
+            }
+        })
         .on("*[href]", {
             element(element) {
                 const href = element.getAttribute("href");
